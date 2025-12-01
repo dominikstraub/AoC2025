@@ -2,44 +2,39 @@ import Testing
 
 @testable import AdventOfCode
 
-struct Day00Tests {
-  let testData = [
-    (
-      input: """
-      1000
-      2000
-      3000
+struct Day01Tests {
+    let testData = [
+        (
+            input: """
+            L68
+            L30
+            R48
+            L5
+            R60
+            L55
+            L1
+            L99
+            R14
+            L82
+            """,
+            result1: 3,
+            result2: 6
+        ),
+    ]
 
-      4000
-
-      5000
-      6000
-
-      7000
-      8000
-      9000
-
-      10000
-
-      """,
-      result1: -1,
-      result2: -1
-    )
-  ]
-
-  @Test func testPart1() async throws {
-    for testDataEl in testData {
-      if testDataEl.result1 == -1 { continue }
-      let challenge = Day00(data: testDataEl.input)
-      #expect(challenge.part1() == testDataEl.result1)
+    @Test func testPart1() async throws {
+        for testDataEl in testData {
+            if testDataEl.result1 == -1 { continue }
+            let challenge = Day01(data: testDataEl.input)
+            #expect(challenge.part1() == testDataEl.result1)
+        }
     }
-  }
 
-  //    @Test func testPart2() async throws {
-  //        for testDataEl in testData {
-  //            if testDataEl.result2 == -1 { continue }
-  //            let challenge = Day00(data: testDataEl.input)
-  //             #expect(challenge.part2() == testDataEl.result2)
-  //        }
-  //    }
+    @Test func testPart2() async throws {
+        for testDataEl in testData {
+            if testDataEl.result2 == -1 { continue }
+            let challenge = Day01(data: testDataEl.input)
+            #expect(challenge.part2() == testDataEl.result2)
+        }
+    }
 }
