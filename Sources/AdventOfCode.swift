@@ -5,6 +5,7 @@ import Foundation
 let allChallenges: [any AdventDay] = [
   Day00(),
   Day01(),
+  Day02(),
 ]
 
 @main
@@ -87,12 +88,15 @@ extension StringProtocol {
   public subscript(_ range: Range<Int>) -> SubSequence {
     prefix(range.lowerBound + range.count).suffix(range.count)
   }
+
   public subscript(_ range: ClosedRange<Int>) -> SubSequence {
     prefix(range.lowerBound + range.count).suffix(range.count)
   }
+
   public subscript(_ range: PartialRangeThrough<Int>) -> SubSequence {
     prefix(range.upperBound.advanced(by: 1))
   }
+
   public subscript(_ range: PartialRangeUpTo<Int>) -> SubSequence { prefix(range.upperBound) }
   public subscript(_ range: PartialRangeFrom<Int>) -> SubSequence {
     suffix(Swift.max(0, count - range.lowerBound))
@@ -156,6 +160,7 @@ extension Int {
 precedencegroup PowerPrecedence {
   higherThan: MultiplicationPrecedence
 }
+
 infix operator ^^ : PowerPrecedence
 public func ^^ (radix: Int, power: Int) -> Int {
   return Int(pow(Double(radix), Double(power)))
