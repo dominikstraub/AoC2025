@@ -12,7 +12,7 @@ struct Day03Tests {
             818181911112111
             """,
             result1: 357,
-            result2: -1
+            result2: 3_121_910_778_619
         ),
     ]
 

@@ -24,7 +24,7 @@ struct Day02Tests {
     @Test func testPart2() async throws {
         for testDataEl in testData {
             if testDataEl.result2 == -1 { continue }
-            let challenge = Day00(data: testDataEl.input)
+            let challenge = Day02(data: testDataEl.input)
             #expect(challenge.part2() == testDataEl.result2)
         }
     }
