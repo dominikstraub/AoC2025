@@ -18,7 +18,7 @@ struct Day04Tests {
             @.@.@@@.@.
             """,
             result1: 13,
-            result2: -1
+            result2: 43
         ),
     ]
 
