@@ -1,0 +1,46 @@
+import Testing
+
+@testable import AdventOfCode
+
+struct Day07Tests {
+  let testData = [
+    (
+      input: """
+      .......S.......
+      ...............
+      .......^.......
+      ...............
+      ......^.^......
+      ...............
+      .....^.^.^.....
+      ...............
+      ....^.^...^....
+      ...............
+      ...^.^...^.^...
+      ...............
+      ..^...^.....^..
+      ...............
+      .^.^.^.^.^...^.
+      ...............
+      """,
+      result1: 21,
+      result2: 40
+    )
+  ]
+
+  @Test func testPart1() async throws {
+    for testDataEl in testData {
+      if testDataEl.result1 == -1 { continue }
+      let challenge = Day07(data: testDataEl.input)
+      #expect(challenge.part1() == testDataEl.result1)
+    }
+  }
+
+  @Test func testPart2() async throws {
+    for testDataEl in testData {
+      if testDataEl.result2 == -1 { continue }
+      let challenge = Day07(data: testDataEl.input)
+      #expect(challenge.part2() == testDataEl.result2)
+    }
+  }
+}
