@@ -44,46 +44,34 @@ struct Day11: AdventDay {
   }
 
   func check2(
-    next current: String, graph: [String: Set<String>], devices: Set<String>,
-    pathCounts: inout [String: (good: Int, all: Int)]
-  ) -> (good: Int, all: Int) {
-    // print(current)
-    // print(devices.count)
-    // print(graph)
-
-    if current == "out" {
-      if devices.contains("dac"), devices.contains("fft") {
-        print(devices)
-        return (good: 1, all: 1)
-      } else {
-        return (good: 0, all: 1)
-      }
+    next current: String, target: String, graph: [String: Set<String>], devices: Set<String>,
+    pathCounts: inout [String: Int]
+  ) -> Int {
+    if current == target {
+      return 1
     }
     if devices.contains(current) {
       print("loop detected")
-      return (good: 0, all: 0)
+      return 0
     }
 
     var newDevices = devices
     newDevices.insert(current)
 
-    var count = (good: 0, all: 0)
-    for next in graph[current]! {
+    var count = 0
+    for next in graph[current, default: []] {
       if let newCount = pathCounts[next] {
-        count.good += newCount.good
-        count.all += newCount.all
+        count += newCount
       } else {
-        let result = check2(next: next, graph: graph, devices: newDevices, pathCounts: &pathCounts)
-        count.good += result.good
-        count.all += result.all
+        let result = check2(
+          next: next, target: target, graph: graph, devices: newDevices, pathCounts: &pathCounts
+        )
+        count += result
       }
     }
 
     pathCounts[current] = count
 
-    if newDevices.contains("dac"), newDevices.contains("fft") {
-      count.good = count.all
-    }
     return count
   }
 
@@ -91,8 +79,31 @@ struct Day11: AdventDay {
     let values = getValues()
     // print(values)
 
-    var pathCounts: [String: (good: Int, all: Int)] = [:]
-    let result = check2(next: "svr", graph: values, devices: [], pathCounts: &pathCounts)
-    return result.good
+    var pathCounts: [String: Int] = [:]
+    let svrDac = check2(
+      next: "svr", target: "dac", graph: values, devices: [], pathCounts: &pathCounts
+    )
+    pathCounts = [:]
+    let dacFft = check2(
+      next: "dac", target: "fft", graph: values, devices: [], pathCounts: &pathCounts
+    )
+    pathCounts = [:]
+    let fftOut = check2(
+      next: "fft", target: "out", graph: values, devices: [], pathCounts: &pathCounts
+    )
+
+    pathCounts = [:]
+    let svrFft = check2(
+      next: "svr", target: "fft", graph: values, devices: [], pathCounts: &pathCounts
+    )
+    pathCounts = [:]
+    let fftDac = check2(
+      next: "fft", target: "dac", graph: values, devices: [], pathCounts: &pathCounts
+    )
+    pathCounts = [:]
+    let dacOut = check2(
+      next: "dac", target: "out", graph: values, devices: [], pathCounts: &pathCounts
+    )
+    return svrDac * dacFft * fftOut + svrFft * fftDac * dacOut
   }
 }
